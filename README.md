@@ -21,10 +21,22 @@
 
         python3 -m venv venv
         
-        source venv/bin/activate
+        source venv/bin/activate # activate virtual environment
         
         pip install --upgrade pip
+        
+        deactivate # deactivate virtual environment
 
-* check needed packages on your environment
+* check your environment for needed packages
 
         ./0_check_environment.sh
+
+* visualize data
+
+        source venv/bin/activate # activate virtual environment
+        
+        python3 ./visualize_data.py
+        
+        deactivate # deactivate virtual environment
+        
+* see output result in output/*

@@ -10,6 +10,7 @@ FALSE=0
 VENV_PATH=$CURRENT_DIR/venv
 
 NEEDED_PACKAGES=(
+    numpy
     pandas
     matplotlib
 )
@@ -124,7 +125,7 @@ is_venv_package_installed(){
                 
                 
                 echo -ne "Do you want to install ${BACKGROUND_WHITE}$package${BACKGROUND_RESET} "
-                echo -ne "by pip automatically at virtual environment?"
+                echo -ne "automatically by pip at virtual environment?"
                 read -p " [Y/N] " reply
                 
                 case $reply in
