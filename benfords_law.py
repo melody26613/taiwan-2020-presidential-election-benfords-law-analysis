@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import re
 
 
 class BenfordsLaw:
@@ -9,6 +10,8 @@ class BenfordsLaw:
         
         self.__BENFORDS_LAW_PROBABILITY = \
             [0.3010, 0.1761, 0.1249, 0.0969, 0.0792, 0.0669, 0.0580, 0.0512, 0.0457]
+        
+        self.__DIGIT_PROBABILITY_RANGE = [0, 0.4]
     
     def count_first_digit_frequency(self, multiple_num_list):
         first_digit_frequency = [0] * 9
@@ -28,7 +31,7 @@ class BenfordsLaw:
     def __get_first_digit(self, num):
         return int(str(num)[:1])
         
-    def output_data_to_graph(self, first_digit_frequency, output_path, filename, title):
+    def output_data_to_graph(self, first_digit_frequency, output_path, data_name, title):
         if (len(first_digit_frequency) != len(self.__DIGIT)):
             raise Exception("invalid first_digit_frequency")
         
@@ -46,10 +49,17 @@ class BenfordsLaw:
         
         line_benfords_law = plt.plot(
             self.__DIGIT, 
-            self.__BENFORDS_LAW_PROBABILITY, "r", 
-            label = "Benford's law"
+            self.__BENFORDS_LAW_PROBABILITY, "r"
         )
         
-        plt.legend(handles = line_benfords_law)
+        legend = ["Benford's law", self.__no_special(data_name)]
+        plt.legend(legend)
+
         plt.xticks(self.__DIGIT)
-        plt.savefig(output_path + "/" + filename + ".png")
+        current_axes = plt.gca()
+        current_axes.set_ylim(self.__DIGIT_PROBABILITY_RANGE)
+        plt.savefig(output_path + "/" + data_name + ".png")
+    
+    def __no_special(self, text):
+        text = re.sub("[^a-zA-Z0-9]+", "", text)
+        return text

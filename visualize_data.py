@@ -1,4 +1,4 @@
-# python version is 3.6
+# minumum python version is 3.6
 
 from os import listdir
 from os.path import isfile, join
@@ -65,7 +65,7 @@ def get_specific_data_from_all_files(column_name, raw_data_files):
         data_list.append(data[column_name].to_list())
     
     return data_list
-    
+
 
 raw_data_files = [f for f in listdir(RAW_DATA_FOLDER) if isfile(join(RAW_DATA_FOLDER, f))]
 print("raw_data_files:\n" + '\n'.join(raw_data_files))
