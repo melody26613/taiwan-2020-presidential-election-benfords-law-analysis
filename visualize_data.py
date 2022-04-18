@@ -12,17 +12,17 @@ OUTPUT_FOLDER = "output"
 DATA_COLUMN = [
     'Villige_Total', 
     'Villige', 
-    'Candidate1_宋楚瑜', 
-    'Candidate2_韓國瑜', 
-    'Candidate3_蔡英文', 
+    'Candidate1', 
+    'Candidate2', 
+    'Candidate3', 
     'Valid', 
     'Invalid', 
     'Vote'
 ]
 VERIFY_COLUMN = [
-    'Candidate1_宋楚瑜', 
-    'Candidate2_韓國瑜', 
-    'Candidate3_蔡英文',
+    'Candidate1', 
+    'Candidate2', 
+    'Candidate3',
     'Valid', 
     'Vote'
 ]
