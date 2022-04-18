@@ -71,11 +71,15 @@ I already checked that unit of row in election data from Central Election Commis
         
 2. see output result in output/ * 輸出結果放在 output/ 下
 
-* graph of candidate 2 候選人2號韓國瑜的圖表
+* graph of candidate 1 Soong Chu-yu 候選人1號宋楚瑜的圖表
+
+![image](https://github.com/melody26613/taiwan-2020-presidential-election-benfords-law-analysis/blob/master/output/Candidate1_宋楚瑜.png)
+
+* graph of candidate 2 Han Kuo-yu 候選人2號韓國瑜的圖表
 
 ![image](https://github.com/melody26613/taiwan-2020-presidential-election-benfords-law-analysis/blob/master/output/Candidate2_韓國瑜.png)
 
-* graph of candidate 3 候選人3號蔡英文的圖表
+* graph of candidate 3 Tsai Ing-wen 候選人3號蔡英文的圖表
 
 ![image](https://github.com/melody26613/taiwan-2020-presidential-election-benfords-law-analysis/blob/master/output/Candidate3_蔡英文.png)
 

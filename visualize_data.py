@@ -27,7 +27,7 @@ VERIFY_COLUMN = [
     'Vote'
 ]
 
-TITLE = "Taiwan 2020 Presidential Election\n" + \
+GRAPH_TITLE = "Taiwan 2020 Presidential Election\n" + \
         "Statistics of All Villages Votes In Taiwan by using Benford's Law Analysis"
 
 def remove_unused_data(file_path):
@@ -36,7 +36,7 @@ def remove_unused_data(file_path):
     raw_data = raw_data.drop(columns = raw_data.columns[8: 13]) # remove column 8 ~ 13
     raw_data.columns = DATA_COLUMN
     
-    raw_data = raw_data[raw_data.Villige_Total.isnull()] # only keep villige data, remove sum
+    raw_data = raw_data[raw_data.Villige_Total.isnull()] # only keep villige data, remove sum column 'Villige_Total'
     raw_data = raw_data.drop(columns = raw_data.columns[0])
     
     raw_data.reset_index(drop = True, inplace = True)
@@ -55,7 +55,7 @@ def output_to_benfords_law_graph_for_specific_data(raw_data_files):
     for column in VERIFY_COLUMN:
         data = get_specific_data_from_all_files(column, raw_data_files)
         digit_frequency = benfords_law_tool.count_first_digit_frequency(data)
-        benfords_law_tool.output_data_to_graph(digit_frequency, OUTPUT_FOLDER, column, TITLE)
+        benfords_law_tool.output_data_to_graph(digit_frequency, OUTPUT_FOLDER, column, GRAPH_TITLE)
 
 def get_specific_data_from_all_files(column_name, raw_data_files):
     data_list = list()
