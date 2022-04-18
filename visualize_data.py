@@ -2,76 +2,61 @@
 
 from os import listdir
 from os.path import isfile, join
-
+from benfords_law import BenfordsLaw
 import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
 
-OUTPUT_PICTURE = "output/result"
 
-def get_first_digit(num):
-    return int(str(num)[:1])
+DATA_COLUMN = [
+    'Villige_Total', 
+    'Villige', 
+    'Candidate1_宋楚瑜', 
+    'Candidate2_韓國瑜', 
+    'Candidate3_蔡英文', 
+    'Valid', 
+    'Invalid', 
+    'Vote'
+]
+VERIFY_COLUMN = [
+    'Candidate1_宋楚瑜', 
+    'Candidate2_韓國瑜', 
+    'Candidate3_蔡英文',
+    'Valid', 
+    'Vote'
+]
+TITLE = "Taiwan 2020 Presidential Election\n" + \
+        "Statistics of All Villages Votes In Taiwan by using Benford's Law Analysis"
 
-def count_first_digit_frequency(num_list):
-    for num in num_list:
-        first_digit = get_first_digit(num)
-        try:
-            first_digit_frequency[first_digit - 1] += 1
-        except:
-            print("exception")
-
-def print_list(num_list):
-    print(', '.join(num_list))
+OUTPUT_FOLDER = "output"
+RAW_DATA_FOLDER = "data"
 
 def remove_unused_data(file_path):
-    raw_data = pd.read_csv(file_path, encoding = "big5")
-    raw_data = raw_data.drop(range(0, 5))
-    raw_data = raw_data.drop(columns = raw_data.columns[8: 13])
-    raw_data.columns = ['Villige_Total', 'Villige', 'Candidate1', 'Candidate2', 'Candidate3', 'Valid', 'Invalid', 'Vote']
-    raw_data = raw_data[raw_data.Villige_Total.isnull()]
+    raw_data = pd.read_csv(file_path, encoding = "big5")   
+    raw_data = raw_data.drop(range(0, 5))  # remove row 0 ~ 5
+    raw_data = raw_data.drop(columns = raw_data.columns[8: 13]) # remove column 8 ~ 13
+    raw_data.columns = DATA_COLUMN
+    
+    raw_data = raw_data[raw_data.Villige_Total.isnull()] # only keep villige data, remove sum
     raw_data = raw_data.drop(columns = raw_data.columns[0])
+    
     raw_data.reset_index(drop = True, inplace = True)
+
     return raw_data
 
-raw_data_path = "data"
-raw_data_files = [f for f in listdir(raw_data_path) if isfile(join(raw_data_path, f))]
 
-print("raw_data_files:" + '\n'.join(raw_data_files))
+raw_data_files = [f for f in listdir(RAW_DATA_FOLDER) if isfile(join(RAW_DATA_FOLDER, f))]
+print("raw_data_files:\n" + '\n'.join(raw_data_files))
 
-first_digit_frequency = [0] * 9
-
-file_path = raw_data_path + "/" + raw_data_files[0]
+file_path = RAW_DATA_FOLDER + "/" + raw_data_files[0]
 data_sample = remove_unused_data(file_path)
 print("\ndata sample from \"" + raw_data_files[0] + "\" :")
 print(data_sample)
 
-
+data_list = list()
 for raw_data_file in raw_data_files:
-    file_path = raw_data_path + "/" + raw_data_file
+    file_path = RAW_DATA_FOLDER + "/" + raw_data_file
     data = remove_unused_data(file_path)
-    count_first_digit_frequency(data.Vote.to_list()) ########### change item here
+    data_list.append(data.Vote.to_list()) ########### change item here
 
-print("\nfrequency of first digit of Vote is: ")
-print(first_digit_frequency)
-
-
-digit = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-BENFORDS_LAW_PROBABILITY = [0.3010, 0.1761, 0.1249, 0.0969, 0.0792, 0.0669, 0.0580, 0.0512, 0.0457]
-
-sum_of_frequency = sum(first_digit_frequency)
-first_digit_rate = [element / sum_of_frequency for element in first_digit_frequency]
-
-plt.title("Taiwan 2020 Presidential Election\nStatistics of All Villages Votes In Taiwan by using Benford's Law Analysis")
-plt.xlabel("First Digit")
-plt.ylabel("Probability")
-
-line_benfords_law = plt.plot(digit, BENFORDS_LAW_PROBABILITY, "r", label = "Benford's law")
-
-vote_x = np.array(digit)
-vote_y = np.array(first_digit_rate)
-plt.bar(vote_x, vote_y)
-
-plt.legend(handles = line_benfords_law)
-plt.xticks(digit)
-plt.savefig(OUTPUT_PICTURE + ".png")
-
+benfords_law_tool = BenfordsLaw()
+frequency = benfords_law_tool.count_first_digit_frequency(data_list)
+benfords_law_tool.output_data_to_graph(frequency, OUTPUT_FOLDER, "Vote", TITLE)

@@ -203,5 +203,5 @@ if [ $is_package_installed -eq $FALSE ]; then
     exit 1
 fi
 
-echo "simple environment checks done"
+echo_highlight "simple environment checks done"
 touch $RECORD_FILE_IF_CHECK_ENVIRONMENT_PASS
