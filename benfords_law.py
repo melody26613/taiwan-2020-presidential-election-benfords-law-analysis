@@ -1,7 +1,3 @@
-from os import listdir
-from os.path import isfile, join
-
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -13,12 +9,6 @@ class BenfordsLaw:
         
         self.__BENFORDS_LAW_PROBABILITY = \
             [0.3010, 0.1761, 0.1249, 0.0969, 0.0792, 0.0669, 0.0580, 0.0512, 0.0457]
-        
-        self.__LINE_BENFORDS_LAW = plt.plot(
-            self.__DIGIT, 
-            self.__BENFORDS_LAW_PROBABILITY, "r", 
-            label = "Benford's law"
-        )
     
     def count_first_digit_frequency(self, multiple_num_list):
         first_digit_frequency = [0] * 9
@@ -45,6 +35,7 @@ class BenfordsLaw:
         sum_of_frequency = sum(first_digit_frequency)
         first_digit_rate = [element / sum_of_frequency for element in first_digit_frequency]
         
+        plt.clf()
         plt.title(title)
         plt.xlabel("First Digit")
         plt.ylabel("Probability")
@@ -53,6 +44,12 @@ class BenfordsLaw:
         data_y = np.array(first_digit_rate)
         plt.bar(data_x, data_y)
         
-        plt.legend(handles = self.__LINE_BENFORDS_LAW)
+        line_benfords_law = plt.plot(
+            self.__DIGIT, 
+            self.__BENFORDS_LAW_PROBABILITY, "r", 
+            label = "Benford's law"
+        )
+        
+        plt.legend(handles = line_benfords_law)
         plt.xticks(self.__DIGIT)
         plt.savefig(output_path + "/" + filename + ".png")
