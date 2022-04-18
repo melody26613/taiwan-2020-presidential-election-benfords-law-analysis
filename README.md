@@ -11,7 +11,16 @@ I already checked that unit of row in election data from Central Election Commis
 
 作者確認台灣選舉資料是以"村里"為單位，2020選舉資料裡總共有7737筆村里數據，可使用班佛定律做驗證。
 
-### Environment 環境
+### Prior knowledge 預備知識
+
+"Benford's law, also known as the Newcomb–Benford law, the law of anomalous numbers, or the first-digit law, is an observation that in many real-life sets of numerical data, the leading digit is likely to be small. In sets that obey the law, the number 1 appears as the leading significant digit about 30% of the time, while 9 appears as the leading significant digit less than 5% of the time. If the digits were distributed uniformly, they would each occur about 11.1% of the time. Benford's law also makes predictions about the distribution of second digits, third digits, digit combinations, and so on."
+
+"It has been shown that this result applies to a wide variety of data sets, including electricity bills, street addresses, stock prices, house prices, population numbers, death rates, lengths of rivers, and physical and mathematical constants. Like other general principles about natural data—for example the fact that many data sets are well approximated by a normal distribution—there are illustrative examples and explanations that cover many of the cases where Benford's law applies, though there are many other cases where Benford's law applies that resist a simple explanation. It tends to be most accurate when values are distributed across multiple orders of magnitude, especially if the process generating the numbers is described by a power law (which is common in nature)."
+-- from [wiki](https://en.wikipedia.org/wiki/Benford%27s_law)
+
+「在數學中，班佛定律描述了真實數字數據集中首位數字的頻率分布。一堆從實際生活得出的數據中，以1為首位數字的數的出現機率約為總數的三成，接近直覺得出之期望值1/9的3倍。推廣來說，越大的數，以它為首幾位的數出現的機率就越低。它可用於檢查各種數據是否有造假。但要注意使用條件：1.數據至少3000筆以上。2.不能有人為操控。」 來源自 [wiki](https://zh.wikipedia.org/wiki/%E6%9C%AC%E7%A6%8F%E7%89%B9%E5%AE%9A%E5%BE%8B)
+
+### Development environment 開發環境
 
 * Ubuntu 18.04
 
@@ -20,17 +29,23 @@ I already checked that unit of row in election data from Central Election Commis
 
 ### Preparation 準備工作
 
-1. install pip 安裝pip
+1. clone repo 複製程式碼
+
+        git clone git@github.com:melody26613/taiwan-2020-presidential-election-benfords-law-analysis.git
+
+        cd taiwan-2020-presidential-election-benfords-law-analysis
+
+2. install pip 安裝pip
 
         sudo apt-get update
 
         sudo apt-get install python3-pip
 
-2. install virtual environment command for python3 安裝python3的虛擬環境套件
+3. install virtual environment command for python3 安裝python3的虛擬環境套件
 
         sudo apt-get install python3-venv
 
-3. create virtual environment 建置虛擬環境
+4. create virtual environment 建置虛擬環境
 
         python3 -m venv venv
         
@@ -40,9 +55,9 @@ I already checked that unit of row in election data from Central Election Commis
         
         deactivate # deactivate virtual environment
 
-4. check your environment for needed packages 檢查環境必要套件
+5. check your environment for needed packages 檢查環境必要套件
 
-        ./0_check_environment.sh
+        ./check_environment.sh
 
 ### Visualize data 資料視覺化
 
