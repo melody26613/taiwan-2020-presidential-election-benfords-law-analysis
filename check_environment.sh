@@ -25,9 +25,9 @@ RECORD_FILE_IF_CHECK_ENVIRONMENT_PASS=$CURRENT_DIR/check_environment_ok.tmp
 BACKGROUND_WHITE='\e[0;30;47m'
 BACKGROUND_RESET='\e[0m'
 
-echo_highlight(){
+echo_highlight() {
     local str=$1
-    echo -e "${BACKGROUND_WHITE}$1${BACKGROUND_RESET}";
+    echo -e "${BACKGROUND_WHITE}$1${BACKGROUND_RESET}"
 }
 
 ############################
@@ -35,24 +35,22 @@ echo_highlight(){
 #        spinner
 #
 ############################
-spin(){
+spin() {
     spinner="/|\\-/|\\-"
-    while :
-    do
-      for i in `seq 0 7`
-      do
-        echo -n "${spinner:$i:1}"
-        echo -en "\010"
-        sleep .2
-      done
+    while :; do
+        for i in $(seq 0 7); do
+            echo -n "${spinner:$i:1}"
+            echo -en "\010"
+            sleep .2
+        done
     done
 }
 
-pause_spin(){
+pause_spin() {
     kill -s SIGSTOP $spin_pid
 }
 
-resume_spin(){
+resume_spin() {
     kill -s SIGCONT $spin_pid
 }
 
@@ -64,28 +62,28 @@ spin_pid=$!
 #      check python
 #
 ############################
-get_python_version(){
+get_python_version() {
     local python_version=$(python3 -V | awk '{print $2}')
     echo $python_version
 }
 
-get_python_main_version(){
+get_python_main_version() {
     local python_version=$1
     echo ${python_version%.*}
 }
 
-get_python_venv_command_name(){
+get_python_venv_command_name() {
     local python_main_version=$1
     echo "python"$python_main_version"-venv"
 }
 
-is_current_python_version_valid(){
+is_current_python_version_valid() {
     local python_version=$1
-    
+
     if [ $python_version = $MINIMUM_PYTHON3_VERSION ]; then
         return $TRUE
     fi
-    
+
     if [ $python_version = $(echo -e "$python_version\n$MINIMUM_PYTHON3_VERSION" | sort -V | head -n1) ]; then
         return $FALSE
     else
@@ -98,7 +96,7 @@ is_current_python_version_valid(){
 # check virtual environment
 #
 ############################
-is_venv_installed(){
+is_venv_installed() {
     local venv_command_name=$1
     local is_installed=$(dpkg -l | grep $venv_command_name)
 
@@ -109,45 +107,46 @@ is_venv_installed(){
     fi
 }
 
-is_venv_package_installed(){
+is_venv_package_installed() {
     local ret=$TRUE
-    
+
     pip_installed_packages=$(pip list --format=columns)
-    
+
     pause_spin
-    
+
     for package in "${NEEDED_PACKAGES[@]}"; do
         check_package=$(echo $pip_installed_packages | grep -i $package)
 
         if [ -z "$check_package" ]; then
             echo "need to install package '$package' in venv"
             while true; do
-                
-                
+
                 echo -ne "Do you want to install ${BACKGROUND_WHITE}$package${BACKGROUND_RESET} "
                 echo -ne "automatically by pip at virtual environment?"
                 read -p " [Y/N] " reply
-                
+
                 case $reply in
-                    [Yy]* )
-                        echo_highlight "pip install $package";
-                        pip install $package;
-                        exit_stat=$?
-                        if [ $exit_stat -ne 0 ]; then
-                            echo_highlight "ERROR: pip install $package failed, please fix it"
-                            ret=$FALSE
-                        fi
-                        break;;
-                    [Nn]* )
-                        ret=$FALSE;
-                        break;;
+                [Yy]*)
+                    echo_highlight "pip install $package"
+                    pip install $package
+                    exit_stat=$?
+                    if [ $exit_stat -ne 0 ]; then
+                        echo_highlight "ERROR: pip install $package failed, please fix it"
+                        ret=$FALSE
+                    fi
+                    break
+                    ;;
+                [Nn]*)
+                    ret=$FALSE
+                    break
+                    ;;
                 esac
             done
         fi
     done
-    
+
     resume_spin
-    
+
     return $ret
 }
 
@@ -184,7 +183,7 @@ if [ ! -d "$VENV_PATH" ]; then
     echo_highlight "ERROR: there is no $python_venv_command folder($VENV_PATH) for this app"
     echo_highlight "please generate venv like: $ python3 -m venv venv"
     echo "exiting..."
-    exit 1    
+    exit 1
 fi
 
 source $VENV_PATH/bin/activate
