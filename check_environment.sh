@@ -122,7 +122,7 @@ is_venv_package_installed() {
             while true; do
 
                 echo -ne "Do you want to install ${BACKGROUND_WHITE}$package${BACKGROUND_RESET} "
-                echo -ne "automatically by pip at virtual environment?"
+                echo -ne "automatically by pip in virtual environment?"
                 read -p " [Y/N] " reply
 
                 case $reply in

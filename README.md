@@ -1,11 +1,11 @@
-# Analysis Taiwan 2020 presidential election by using Benford's law 用班佛定律分析台灣2020選舉
+# Analyzing the Taiwan 2020 presidential election using Benford's Law 用班佛定律分析台灣2020選舉
 
 
 ### Abstract 摘要
 
-Some people in Taiwan consider there was electoral fraud of Taiwan 2020 presidential election, according to that, I decide to use Benford's law to check if there was electoral fraud in 2020 Taiwan election or not. Benford's law can identify data result, usually for accounting fraud detection and verify election data, number of data is bigger than 3000 as a presupposition.
+In light of concerns among some members of the public regarding the integrity of the 2020 Taiwan election results and suspicions of electoral fraud, I was curious about the possibility of such occurrences. To investigate this, the Benford's Law was chosen as a tool to examine whether there was any evidence of manipulation. Benford's Law is commonly utilized to check for data falsification and is often applied in auditing financial records and investigating electoral fraud. The prerequisite for its application is that the dataset should have more than 3000 entries.
 
-I already checked that unit of row in election data from Central Election Commission is "village", total number of data is 7737, that means we can use Benford's law to verify election data.
+I verified that the election data in Taiwan was organized based on the 'village' as the unit. In the 2020 election dataset, there were a total of 7737 entries representing village-level data, making it suitable for verification using Benford's Law.
     
 有鑑於部分民眾對於台灣2020年選舉結果有疑慮、認為政府有作票嫌疑，作者也好奇是否存在這樣的可能性，所以決定使用班佛定律確認是否有作票，班佛定律可用來檢查數據是否造假，常被應用在查假帳、查作票，使用前提是資料筆數大於3000筆。
 
@@ -33,44 +33,50 @@ I already checked that unit of row in election data from Central Election Commis
 
 1. clone repo 複製程式碼
 
-        git clone git@github.com:melody26613/taiwan-2020-presidential-election-benfords-law-analysis.git
+```
+git clone git@github.com:melody26613/taiwan-2020-presidential-election-benfords-law-analysis.git
 
-        cd taiwan-2020-presidential-election-benfords-law-analysis
+cd taiwan-2020-presidential-election-benfords-law-analysis
+```
 
 2. install pip 安裝pip
 
-        sudo apt-get update
+    [pip documentation v23.3.2](https://pip.pypa.io/en/stable/installation/)
 
-        sudo apt-get install python3-pip
+    [AWS install pip on Linux](https://docs.aws.amazon.com/zh_tw/elasticbeanstalk/latest/dg/eb-cli3-install-linux.html)
 
 3. install virtual environment command for python3 安裝python3的虛擬環境套件
-
-        sudo apt-get install python3-venv
+```
+sudo apt-get install python3-venv
+```
 
 4. create virtual environment 建置虛擬環境
-
-        python3 -m venv venv
+```
+python3 -m venv venv
         
-        source venv/bin/activate # activate virtual environment
+source venv/bin/activate # activate virtual environment
         
-        pip install --upgrade pip
+pip install --upgrade pip
         
-        deactivate # deactivate virtual environment
+deactivate # deactivate virtual environment
+```
 
 5. check your environment for needed packages 檢查環境必要套件
-
-        ./check_environment.sh
+```
+./check_environment.sh
+```
 
 ### Visualize data 資料視覺化
 
 1. execute script 執行指令
+```
+source venv/bin/activate # activate virtual environment
+        
+python3 ./visualize_data.py
+        
+deactivate # deactivate virtual environment
+```
 
-        source venv/bin/activate # activate virtual environment
-        
-        python3 ./visualize_data.py
-        
-        deactivate # deactivate virtual environment
-        
 2. see output result in output/ * 輸出結果放在 output/ 下
 
 * graph of candidate 1 Soong Chu-yu 候選人1號宋楚瑜的圖表
@@ -87,9 +93,9 @@ I already checked that unit of row in election data from Central Election Commis
 
 ### Conclusion 結論
 
-According to the output graph, data of three candidates followed Benford's law. It's theoretically that there was "no large scale of electoral fraud effected election results" in Taiwan 2020 presidential election.
+According to the final results, the charts of the three candidates seem to fairly conform to Benford's Law. Theoretically, there doesn't appear to be any 'large enough to influence the election results' fraudulent activities in the 2020 Taiwan elections.
 
-Maybe people just not satisfied with the election results, so they claim there was electoral fraud in 2020 election. However, as the fact we can see, we still need to accept this result, and keep using our civil rights to supervise the government no matter what. We can still see that people in different opinions cannot accept each other's opinion even though election is over. I think verbal attack to each other is not helpful for Taiwan, we should put ourself in their shoes, find common in each other, together to make Taiwan a better place.
+Individuals claiming government manipulation may be dissatisfied with the election outcome, but the results are in front of us, and we must try to accept this result. Even after the voting has ended, we can continue to exercise our civic rights to diligently supervise the government. Although the voting has ended, the divisions among the public are still evident. I hope that people with different perspectives can attempt to consider each other's viewpoints, engage in mutual communication, accept one another, find common ground, and realize that mutual criticism will not lead Taiwan to progress. It is through unity and cooperation that we can work towards a better Taiwan.
 
 從最後結果來看，3位候選人的圖表都蠻符合班佛定律，理論上在這次 2020 台灣選舉中，並沒有「大規模到足以影響選舉結果」的作票行為。
 
