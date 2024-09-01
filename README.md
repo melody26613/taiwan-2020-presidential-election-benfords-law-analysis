@@ -1,17 +1,17 @@
-# Analyzing the Taiwan 2020 presidential election using Benford's Law 用班佛定律分析台灣2020選舉
+# An Analysis of the 2020 Taiwanese Presidential Election Using Benford's Law 用班佛定律分析台灣2020總統選舉
 
 
 ### Abstract 摘要
 
-In light of concerns among some members of the public regarding the integrity of the 2020 Taiwan election results and suspicions of electoral fraud, I was curious about the possibility of such occurrences. To investigate this, the Benford's Law was chosen as a tool to examine whether there was any evidence of manipulation. Benford's Law is commonly utilized to check for data falsification and is often applied in auditing financial records and investigating electoral fraud. The prerequisite for its application is that the dataset should have more than 3000 entries.
+To investigate the claims of electoral fraud in the 2020 Taiwanese election, this study applied Benford's Law to the election data. Benford's Law is a statistical test that can be used to identify patterns in numerical data that are indicative of fraud or manipulation. The law requires a large dataset, typically with more than 3,000 data points.
 
-I verified that the election data in Taiwan was organized based on the 'village' as the unit. In the 2020 election dataset, there were a total of 7737 entries representing village-level data, making it suitable for verification using Benford's Law.
+The Taiwanese election data, which is organized at the village level, was found to be suitable for this analysis, with a total of 7,737 data points.
     
-有鑑於部分民眾對於台灣2020年選舉結果有疑慮、認為政府有作票嫌疑，作者也好奇是否存在這樣的可能性，所以決定使用班佛定律確認是否有作票，班佛定律可用來檢查數據是否造假，常被應用在查假帳、查作票，使用前提是資料筆數大於3000筆。
+有鑑於部分民眾對於台灣2020年選舉結果有疑慮、認為政府有作票嫌疑，作者也好奇是否存在這樣的可能性，所以決定使用班佛定律確認是否有作票的可能。班佛定律可用來檢查數據是否造假，常被應用在查假帳、查作票，使用前提是資料筆數大於3000筆。
 
 作者確認台灣選舉資料是以"村里"為單位，2020選舉資料裡總共有7737筆村里數據，可使用班佛定律做驗證。
 
-### Prior knowledge 預備知識
+### Prior Knowledge 預備知識
 
 * Benford's law 班佛定律
 
@@ -22,7 +22,13 @@ I verified that the election data in Taiwan was organized based on the 'village'
 
 「在數學中，班佛定律描述了真實數字數據集中首位數字的頻率分布。一堆從實際生活得出的數據中，以1為首位數字的數的出現機率約為總數的三成，接近直覺得出之期望值1/9的3倍。推廣來說，越大的數，以它為首幾位的數出現的機率就越低。它可用於檢查各種數據是否有造假。但要注意使用條件：1.數據至少3000筆以上。2.不能有人為操控。」 來源自 [wiki](https://zh.wikipedia.org/wiki/%E6%9C%AC%E7%A6%8F%E7%89%B9%E5%AE%9A%E5%BE%8B)
 
-### Development environment 開發環境
+
+### Election Data 選舉資料
+You can download election data from [here](https://db.cec.gov.tw/ElecTable/Election/ElecTickets?dataType=tickets&typeId=ELC&subjectId=P0&legisId=00&themeId=1f7d9f4f6bfe06fdaf4db7df2ed4d60c&dataLevel=N&prvCode=00&cityCode=000&areaCode=00&deptCode=000&liCode=0000)
+
+可以在[這裡](https://db.cec.gov.tw/ElecTable/Election/ElecTickets?dataType=tickets&typeId=ELC&subjectId=P0&legisId=00&themeId=1f7d9f4f6bfe06fdaf4db7df2ed4d60c&dataLevel=N&prvCode=00&cityCode=000&areaCode=00&deptCode=000&liCode=0000)下載選舉資料
+
+### Development Environment 開發環境
 
 * Ubuntu 18.04
 
@@ -62,13 +68,13 @@ pip install -r requirements.txt
 deactivate # deactivate virtual environment
 ```
 
-### Visualize data 資料視覺化
+### Visualize Data 資料視覺化
 
 1. execute script 執行指令
 ```
 source venv/bin/activate # activate virtual environment
         
-python3 ./visualize_data.py
+python3 visualize_data.py
         
 deactivate # deactivate virtual environment
 ```
@@ -89,9 +95,9 @@ deactivate # deactivate virtual environment
 
 ### Conclusion 結論
 
-According to the final results, the charts of the three candidates seem to fairly conform to Benford's Law. Theoretically, there doesn't appear to be any 'large enough to influence the election results' fraudulent activities in the 2020 Taiwan elections.
+The application of Benford's Law to the 2020 Taiwanese presidential election data has yielded results that do not support claims of widespread electoral fraud. While some citizens may have expressed doubts about the integrity of the election process, the statistical analysis presented in this study suggests that the election results are reliable.
 
-Individuals claiming government manipulation may be dissatisfied with the election outcome, but the results are in front of us, and we must try to accept this result. Even after the voting has ended, we can continue to exercise our civic rights to diligently supervise the government. Although the voting has ended, the divisions among the public are still evident. I hope that people with different perspectives can attempt to consider each other's viewpoints, engage in mutual communication, accept one another, find common ground, and realize that mutual criticism will not lead Taiwan to progress. It is through unity and cooperation that we can work towards a better Taiwan.
+However, the persistence of political polarization within Taiwanese society is a matter of concern. It is crucial for individuals to engage in constructive dialogue and to seek common ground. By fostering a more inclusive and tolerant society, Taiwan can better address the challenges it faces.
 
 從最後結果來看，3位候選人的圖表都蠻符合班佛定律，理論上在這次 2020 台灣選舉中，並沒有「大規模到足以影響選舉結果」的作票行為。
 
