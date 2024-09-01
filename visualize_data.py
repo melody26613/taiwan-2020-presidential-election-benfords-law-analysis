@@ -9,6 +9,7 @@ import re
 from os import listdir
 from os.path import isfile, join
 from pandas import DataFrame
+from scipy.spatial import distance
 
 from benfords_law import BenfordsLaw
 
@@ -45,7 +46,7 @@ def print_raw_data(file: str):
 
 def validate_by_benfords_law(files: list):
     for column in VERIFY_COLUMN:
-        print("processing '" + column + "'")
+        print("\nprocessing '" + column + "'")
 
         data_list = extract_column_data_from_files(column, files)
 
@@ -130,6 +131,11 @@ def output_data_to_graph(
     current_axes = plt.gca()
     current_axes.set_ylim([0, BenfordsLaw.BENFORDS_LAW_PROBABILITY[0] + 0.1])
 
+    dist = count_data_distance(list1=probability, list2=BenfordsLaw.BENFORDS_LAW_PROBABILITY)
+    print("dist=" + str(dist))
+    plt.figtext(0.5, 0.05, "Euclidean distance is " + str(round(dist, 6)), ha="center")
+    plt.subplots_adjust(bottom=0.2)
+
     output = os.path.join(output_folder, data_name + ".png")
     plt.savefig(output)
 
@@ -137,6 +143,11 @@ def output_data_to_graph(
 def remove_special(text):
     text = re.sub("[^a-zA-Z0-9]+", "", text)
     return text
+
+
+def count_data_distance(list1: list, list2: list) -> float:
+    dist = distance.euclidean(list1, list2)
+    return dist
 
 
 raw_data_files = [os.path.join(RAW_DATA_FOLDER, f) for f in listdir(
