@@ -57,13 +57,9 @@ python3 -m venv venv
 source venv/bin/activate # activate virtual environment
         
 pip install --upgrade pip
-        
-deactivate # deactivate virtual environment
-```
+pip install -r requirements.txt
 
-5. check your environment for needed packages 檢查環境必要套件
-```
-./check_environment.sh
+deactivate # deactivate virtual environment
 ```
 
 ### Visualize data 資料視覺化
