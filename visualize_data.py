@@ -9,7 +9,6 @@ import re
 from os import listdir
 from os.path import isfile, join
 from pandas import DataFrame
-from scipy.spatial import distance
 
 from benfords_law import BenfordsLaw
 
@@ -115,26 +114,31 @@ def output_data_to_graph(
     plt.xlabel("First Digit")
     plt.ylabel("Probability")
 
+    width = 0.25
     data_x = np.array(BenfordsLaw.DIGITS)
     data_y = np.array(probability)
-    plt.bar(data_x, data_y)
+    base_y = np.array(BenfordsLaw.BENFORDS_LAW_PROBABILITY)
 
-    plt.plot(
-        BenfordsLaw.DIGITS,
-        BenfordsLaw.BENFORDS_LAW_PROBABILITY, "r"
+    plt.bar(
+        data_x - width,
+        data_y,
+        width,
+        label=remove_special(data_name),
+        color='skyblue'
+    )
+    plt.bar(
+        data_x + width,
+        base_y,
+        width,
+        label="Benford's law",
+        color='salmon'
     )
 
-    legend = ["Benford's law", remove_special(data_name)]
-    plt.legend(legend)
+    plt.legend()
 
     plt.xticks(BenfordsLaw.DIGITS)
     current_axes = plt.gca()
     current_axes.set_ylim([0, BenfordsLaw.BENFORDS_LAW_PROBABILITY[0] + 0.1])
-
-    dist = count_data_distance(list1=probability, list2=BenfordsLaw.BENFORDS_LAW_PROBABILITY)
-    print("dist=" + str(dist))
-    plt.figtext(0.5, 0.05, "Euclidean distance is " + str(round(dist, 6)), ha="center")
-    plt.subplots_adjust(bottom=0.2)
 
     output = os.path.join(output_folder, data_name + ".png")
     plt.savefig(output)
@@ -143,11 +147,6 @@ def output_data_to_graph(
 def remove_special(text):
     text = re.sub("[^a-zA-Z0-9]+", "", text)
     return text
-
-
-def count_data_distance(list1: list, list2: list) -> float:
-    dist = distance.euclidean(list1, list2)
-    return dist
 
 
 raw_data_files = [os.path.join(RAW_DATA_FOLDER, f) for f in listdir(
